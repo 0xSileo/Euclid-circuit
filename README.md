@@ -10,3 +10,13 @@ For now the circuit is:
 - Extracting the DS signed public key from the signed certificate;
 - Verifying that the ID was signed with the DS public key;
 - Verify the hash chain starting from the mrz (Data Group 1) -> eContent that contains a concatenation of the Data Group hashes -> Signed Data;
+
+
+## steps
+Run this in the circuits folder
+
+1. chmod +x the setup.sh
+1. yarn run install:circuit (or like yarn install:circuit, check package.json docs)
+1. yarn install (npm i produces errors)
+1. ./scripts/setup.sh build (run the setup and pass the build option) or run yarn build because points to that (cfr package.json)
+
