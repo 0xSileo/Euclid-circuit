@@ -20,6 +20,7 @@
     "circomlibjs": "^0.1.7",
     "dotenv": "^16.4.5",
     "mocha": "^10.4.0",
+    "node-forge": "^1.3.1",
     "pkijs": "^3.1.0",
     "pvutils": "^1.1.3",
     "ts-mocha": "^10.0.0",
@@ -29,6 +30,7 @@
   "devDependencies": {
     "@types/circomlibjs": "^0.1.6",
     "@types/mocha": "^10.0.6",
-    "@types/node": "^20.14.2"
+    "@types/node": "^20.14.2",
+    "@types/node-forge": "^1.3.11"
   }
 }
