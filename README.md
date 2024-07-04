@@ -20,3 +20,10 @@ Run this in the circuits folder
 1. yarn install (npm i produces errors)
 1. ./scripts/setup.sh build (run the setup and pass the build option) or run yarn build because points to that (cfr package.json)
 
+## Manual End-to-End Test
+
+1. `cd circuits`
+2. `mkdir -p build`
+3. `yarn install`
+4. `./scripts/setup.sh build`
+5. `npx ts-node manual-test/run.ts`
