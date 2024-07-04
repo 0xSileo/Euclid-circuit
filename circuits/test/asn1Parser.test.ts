@@ -2,7 +2,7 @@ import { getPublicKeyFromSignedData, parseSOD } from "./util";
 import { AsnParser, AsnConvert } from "@peculiar/asn1-schema";
 import { Certificate as x509Certificate } from "@peculiar/asn1-x509";
 import { createSubarray, findPublicKeyIndex } from "./asn1Parser";
-import { getSignatureData } from "./eu-verifier.test";
+import { getSignatureData } from "./rsa-verifier.test";
 import { Certificate } from "pkijs";
 import crypto from "crypto";
 import assert from "assert";
