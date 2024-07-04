@@ -1,12 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import forge from 'node-forge'
 import fs from 'fs'
-import { bigIntToChunkedBytes } from '@zk-email/helpers/dist/binary-format'
-import { buildPoseidon } from 'circomlibjs'
 import path from 'path';
-
-// Function to convert a hexadecimal string to BigInt
-const hexToBigInt = (hex: string): bigint => BigInt(`0x${hex}`)
 
 function generateKeyPair() {
   // Generate an RSA key pair
