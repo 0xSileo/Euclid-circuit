@@ -1,6 +1,11 @@
+import fs from "fs";
 import path from "path";
 import assert from "assert";
+import { subtle } from "crypto";
 
+import { fromBER } from "asn1js";
+import { Certificate } from "pkijs";
+import { stringToArrayBuffer } from "pvutils";
 import forge from "node-forge";
 import {
   bufferToHex,
@@ -198,4 +203,32 @@ function createSelfSignedCertificate(keys: forge.pki.rsa.KeyPair) {
   cert.sign(keys.privateKey, forge.md.sha256.create());
 
   return cert;
+}
+
+async function getPublicKeyFromCertificatePem(pemFileContent: string) {
+  const der = pemToDer(pemFileContent);
+  const asn1 = fromBER(der);
+  const certificate = new Certificate({ schema: asn1.result });
+
+  const publicKey = await subtle.importKey(
+    "spki",
+    certificate.subjectPublicKeyInfo.toSchema().toBER(false),
+    { name: "RSASSA-PKCS1-v1_5", hash: { name: "SHA-256" } },
+    true,
+    ["verify"]
+  );
+
+  return publicKey;
+}
+
+function pemToDer(pem: string) {
+  const pemHeader = "-----BEGIN CERTIFICATE-----";
+  const pemFooter = "-----END CERTIFICATE-----";
+  const pemContents = pem
+    .replace(pemHeader, "")
+    .replace(pemFooter, "")
+    .replace(/\s/g, ""); // Remove newlines and spaces
+
+  const binaryDer = Buffer.from(pemContents, "base64");
+  return stringToArrayBuffer(binaryDer.toString("binary"));
 }
