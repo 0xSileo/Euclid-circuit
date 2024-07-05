@@ -80,7 +80,9 @@ export function generateTestData(
     BigInt(121),
     BigInt(17)
   );
-  const CSCApublicKey = BigInt(keys.publicKey.n.toString());
+  const CSCApublicKey = BigInt(
+    (cert.publicKey as forge.pki.rsa.PublicKey).n.toString()
+  );
   const CSCApubKey = splitToWords(CSCApublicKey, BigInt(121), BigInt(34)).slice(
     0,
     17
