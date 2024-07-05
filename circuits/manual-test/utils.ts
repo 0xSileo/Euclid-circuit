@@ -12,6 +12,7 @@ import circom_tester from "circom_tester/wasm/tester";
 
 import { splitToWords } from "../test/util";
 
+const DEFAULT_ASSETS_DIR = path.join(__dirname, "..", "assets");
 const DEFAULT_CIRCUIT_DIR = path.join(__dirname, "..", "src");
 const DEFAULT_CIRCUIT_BUILD_DIR = path.join(__dirname, "..", "build");
 const NODE_MODULES_PATH = path.join(__dirname, "..", "node_modules");
@@ -32,7 +33,11 @@ export async function getCircuit(
   return circuit;
 }
 
-export function generateTestData(dataToSign: string) {
+export function generateTestData(
+  dataToSign: string,
+  savePemFiles = false,
+  assetsDirectory = DEFAULT_ASSETS_DIR
+) {
   const keys = generateKeyPair();
   const cert = createSelfSignedCertificate(keys);
 
@@ -48,6 +53,21 @@ export function generateTestData(dataToSign: string) {
     publicKey: forge.pki.publicKeyToPem(keys.publicKey),
     certificate: forge.pki.certificateToPem(cert),
   };
+
+  if (savePemFiles) {
+    fs.writeFileSync(
+      path.join(assetsDirectory, "testPrivateKey.pem"),
+      pems.privateKey
+    );
+    fs.writeFileSync(
+      path.join(assetsDirectory, "testPublicKey.pem"),
+      pems.publicKey
+    );
+    fs.writeFileSync(
+      path.join(assetsDirectory, "testCertificate.pem"),
+      pems.certificate
+    );
+  }
 
   const [SODDataPadded, SODDataPaddedLen] = sha256Pad(
     new Uint8Array(Buffer.from(dataToSign, "utf-8")),
